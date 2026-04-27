@@ -1,51 +1,84 @@
 {
-    "name": "claude-context",
-    "version": "0.1.10",
-    "description": "A powerful code indexing tool with multi-platform support",
-    "private": true,
-    "scripts": {
-        "build": "pnpm -r --filter='!./examples/*' build && pnpm -r --filter='./examples/*' build",
-        "build:core": "pnpm --filter @zilliz/claude-context-core build",
-        "build:vscode": "pnpm --filter semanticcodesearch compile",
-        "build:mcp": "pnpm --filter @zilliz/claude-context-mcp build",
-        "dev": "pnpm -r dev",
-        "dev:core": "pnpm --filter @zilliz/claude-context-core dev",
-        "dev:vscode": "pnpm --filter semanticcodesearch watch",
-        "dev:mcp": "pnpm --filter @zilliz/claude-context-mcp dev",
-        "clean": "pnpm -r clean",
-        "lint": "pnpm -r lint",
-        "lint:fix": "pnpm -r run lint:fix",
-        "typecheck": "pnpm -r run typecheck",
-        "release:core": "pnpm --filter @zilliz/claude-context-core... run build && pnpm --filter @zilliz/claude-context-core publish --access public --no-git-checks",
-        "release:mcp": "pnpm --filter @zilliz/claude-context-mcp... run build && pnpm --filter @zilliz/claude-context-mcp publish --access public --no-git-checks",
-        "release:vscode": "pnpm --filter @zilliz/claude-context-core build && pnpm --filter semanticcodesearch run webpack && pnpm --filter semanticcodesearch release",
-        "example:basic": "pnpm --filter claude-context-basic-example start",
-        "benchmark": "node scripts/build-benchmark.js"
-    },
-    "devDependencies": {
-        "@types/node": "^20.0.0",
-        "@typescript-eslint/eslint-plugin": "^8.31.1",
-        "@typescript-eslint/parser": "^8.31.1",
-        "assert": "^2.1.0",
-        "browserify-zlib": "^0.2.0",
-        "eslint": "^9.25.1",
-        "https-browserify": "^1.0.0",
-        "os-browserify": "^0.3.0",
-        "rimraf": "^6.0.1",
-        "stream-http": "^3.2.0",
-        "tree-sitter-cli": "^0.25.6",
-        "typescript": "^5.8.3",
-        "url": "^0.11.4",
-        "vm-browserify": "^1.1.2"
-    },
-    "engines": {
-        "node": ">=20.0.0",
-        "pnpm": ">=10.0.0"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/zilliztech/claude-context.git"
-    },
-    "license": "MIT",
-    "author": "Cheney Zhang <277584121@qq.com>"
+  "name": "claude-context",
+  "version": "0.1.0",
+  "description": "A tool to manage and inject context into Claude AI conversations using vector search",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "claude-context": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "claude",
+    "anthropic",
+    "context",
+    "vector-search",
+    "milvus",
+    "zilliz",
+    "rag",
+    "embeddings"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.0",
+    "@zilliz/milvus2-sdk-node": "^2.4.0",
+    "commander": "^12.0.0",
+    "dotenv": "^16.4.0",
+    "openai": "^4.47.0",
+    "ora": "^5.4.1",
+    "chalk": "^4.1.2",
+    "inquirer": "^8.2.6",
+    "glob": "^10.4.0",
+    "tiktoken": "^1.0.15"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^8.2.10",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__/**/*.ts",
+      "**/*.test.ts"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/**/*.d.ts"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/claude-context.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/claude-context/issues"
+  }
 }
